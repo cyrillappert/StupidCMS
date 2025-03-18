@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('/fonts/RobotoMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@theme {
+  --font-sans: 'Suisse Intl', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+  
+  --color-yellow: #e1ff06;
+  --color-red: #FC0001;
+  --color-blue: #1A1AFF;
+  --color-white: #F1F1F1;
+  --color-light-gray: #D9D9D9;
+  --color-dark-gray: #434343;
+  --color-black: #191919;
+  --color-full-black: #000000;
+  --color-full-white: #FFFFFF;
+  --color-purple: rgb(160, 0, 255);
+  
+  --text-shadow-yellow: 
+    -2px -2px 0 var(--color-yellow), -1px -2px 0 var(--color-yellow), 0px -2px 0 var(--color-yellow), 1px -2px 0 var(--color-yellow), 2px -2px 0 var(--color-yellow),
+    -2px -1px 0 var(--color-yellow), 2px -1px 0 var(--color-yellow),
+    -2px 0px 0 var(--color-yellow), 2px 0px 0 var(--color-yellow),
+    -2px 1px 0 var(--color-yellow), 2px 1px 0 var(--color-yellow),
+    -2px 2px 0 var(--color-yellow), -1px 2px 0 var(--color-yellow), 0px 2px 0 var(--color-yellow), 1px 2px 0 var(--color-yellow), 2px 2px 0 var(--color-yellow);
+}
+
+
+body {
+  @apply bg-full-white dark:bg-full-black;
+}
+
+h2 {
+  @apply text-4xl sm:text-6xl italic mb-4 uppercase;
+}
+
+
+h3 {
+  @apply text-3xl sm:text-3xl;
+}
+
+p {
+  @apply text-xl;
+}
+
+hr {
+  @apply my-4;
+}
+
+.ascii-art {
+  @apply text-[7px] sm:text-xs md:text-xs lg:text-base leading-none font-mono;
+}
+
+
+/* Base page class */
+.page {
+  @apply min-h-screen p-8;
+}
+
+.home {
+  @apply relative grid grid-cols-1;
+  padding: 2rem 2rem 0 2rem; /* Override base padding for grid layout */
+}
+
+.home .hero-title {
+  @apply row-start-1 row-span-1 col-span-1 col-start-1;
+}
+
+@media (max-width: 450px) {
+  .home .hero-title {
+    margin-top: 40px;
+  }
+}
+
+.home .featured-img {
+  @apply row-start-1 row-span-1 col-start-1 col-span-1 self-end justify-self-end;
+}
+
+.home .hero-text {
+  @apply text-xs row-start-1 row-span-1 col-start-1 col-span-1 self-end max-w-2/3;
+}
+
+.cv {
+  @apply bg-yellow dark:bg-dark-gray dark:text-yellow;
+}
+
+.cv .markdown {
+  @apply dark:text-yellow max-w-4xl mx-auto;
+}
+
+
+.home-bg {
+  @apply absolute inset-0 -z-10 bg-full-white dark:bg-full-black dark:invert;
+}
+
+.home .featured-img img {
+  @apply dark:invert w-full max-w-2xl mx-auto;
+}
+
+
+.cv h2 {
+  @apply italic pt-8 uppercase;
+}
+
+.cv h3 {
+  @apply pt-8;
+}
+
+.cv h4 {
+}
+
+.cv .ascii-art {
+  @apply mb-20 dark:text-dark-gray;
+}
+
+.project {
+  @apply p-4 mb-8 grid grid-cols-3 gap-4 dark:text-light-gray max-w-4xl mx-auto;
+}
+
+.project h3 {
+  @apply text-2xl mb-2;
+}
+
+.project * {
+  @apply col-span-4;
+}
+
+.project .img-small {
+  
+  @apply col-span-1;
+}
+
+.project .img-medium {
+  @apply col-span-2;
+}
+
+.project h2, .project h3 {
+  text-shadow: var(--text-shadow-yellow);
+  @apply dark:text-full-black;
+}
+
+.project h3 {
+  @apply uppercase mt-4;
+}
+
+.home .markdown h1,
+.home .markdown h2,
+.home .markdown p {
+  text-shadow: var(--text-shadow-yellow);
+}
+
+.ascii-art {
+  text-shadow: var(--text-shadow-yellow);
+}
+
+
+
+/* Menu styles */
+.menu-overlay {
+  background-color: rgba(26, 26, 255, 0.95);
+}
+
+/* Responsive image size classes */
+.img-full {
+  @apply w-screen max-w-none;
+}
+
+.img-large {
+  @apply w-full max-w-4xl;
+}
+
+.img-medium {
+  @apply w-full max-w-2xl;
+}
+
+.img-small {
+  @apply w-full max-w-lg;
+}
+
+/* Work Page styles */
+.work-page {
+  @apply bg-full-white dark:bg-full-black;
+}
+
+.work-page .ascii-art {
+  @apply mb-8;
+}
+
+.work-page .project-container {
+  @apply relative;
+}
+
+.work-page .nav-arrow {
+  @apply cursor-pointer dark:text-full-black text-xl;
+  text-shadow: var(--text-shadow-yellow);
+}
+
+/* CV Page specific styles */
+.cv-page h2 {
+  @apply pb-10;
+}
+
+/* Project Navigation styles */
+.project-nav {
+  @apply flex justify-between items-center mb-4 max-w-4xl mx-auto;
+}
+
+.nav-arrow.disabled {
+  @apply invisible;
+}
+
+/* Menu specific styles */
+.menu-trigger {
+  @apply text-[4px] sm:text-[6px] fixed top-1 right-1 cursor-pointer;
+}
+
+.menu {
+  @apply fixed top-0 flex items-center justify-center left-0 h-full w-full;
+}
+
+.menu-list {
+  @apply text-center;
+}
+

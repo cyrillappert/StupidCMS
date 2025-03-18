@@ -1,0 +1,83 @@
+<?php
+
+declare(strict_types=1);
+
+namespace StupidCMS\Template;
+
+use StupidCMS\Core\Config;
+
+class TemplateEngine
+{
+    private Config $config;
+    private string $templateDir;
+    
+    public function __construct(?Config $config = null)
+    {
+        $this->config = $config ?? Config::getInstance();
+        $this->templateDir = $this->config->get('template_dir');
+    }
+    
+    public function render(string $template, array $data = []): string
+    {
+        $templatePath = $this->resolveTemplatePath($template);
+        
+        if (!$templatePath) {
+            throw new \RuntimeException("Template '{$template}' not found");
+        }
+        
+        return $this->renderFile($templatePath, $data);
+    }
+    
+    public function exists(string $template): bool
+    {
+        return $this->resolveTemplatePath($template) !== null;
+    }
+    
+    public function escape(mixed $value): string
+    {
+        return htmlspecialchars((string)$value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    }
+    
+    private function resolveTemplatePath(string $template): ?string
+    {
+        $path = $this->templateDir . '/' . $template . '.php';
+        return file_exists($path) ? $path : null;
+    }
+    
+    private function renderFile(string $templatePath, array $data): string
+    {
+        // Create isolated scope for template execution
+        $templateEngine = $this;
+        $renderTemplate = function(string $__templatePath, array $__data) use ($templateEngine) {
+            // Extract data to local scope
+            extract($__data, EXTR_SKIP);
+            
+            // For backward compatibility, set global variables
+            if (isset($__data['foo'])) {
+                $GLOBALS['foo'] = $__data['foo'];
+            }
+            if (isset($__data['currentSlug'])) {
+                $GLOBALS['currentSlug'] = $__data['currentSlug'];
+            }
+            
+            // Helper functions available in templates
+            $escape = fn($value) => $templateEngine->escape($value);
+            $template = fn($name, $templateData = []) => $templateEngine->render($name, $templateData);
+            
+            ob_start();
+            try {
+                require $__templatePath;
+                return ob_get_clean();
+            } catch (\Throwable $e) {
+                ob_end_clean();
+                throw new \RuntimeException(
+                    "Error rendering template '{$__templatePath}': " . $e->getMessage(),
+                    0,
+                    $e
+                );
+            }
+        };
+        
+        return $renderTemplate($templatePath, $data);
+    }
+}
