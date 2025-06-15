@@ -10,14 +10,12 @@
     $totalProjects = count($children);
     ?>
 
-    <?php if ($totalProjects > 0): ?>
-        <?php
-        $firstProject = $children[0];
-        $projectContent = $foo->{$firstProject['name']}();
-        ?>
-        <?php if ($projectContent): ?>
-            <?= $projectContent->render() ?>
-        <?php endif; ?>
+    <?php
+    $firstProject = $children[0];
+    $projectContent = $foo->{$firstProject['name']}();
+    ?>
+    <?php if ($projectContent): ?>
+        <?= $projectContent->render() ?>
     <?php endif; ?>
 </div>
 
