@@ -9,29 +9,15 @@ use StupidCMS\Http\Controllers\PageController;
 
 class Application
 {
-    private Router $router;
-    
-    public function __construct()
-    {
-        $this->initializeServices();
-    }
-    
     public function run(): void
     {
         try {
-            $this->router->run();
+            $pageController = new PageController();
+            $router = new Router($pageController);
+            $router->run();
         } catch (\Throwable $e) {
             $this->handleError($e);
         }
-    }
-    
-    private function initializeServices(): void
-    {
-        // Controllers
-        $pageController = new PageController();
-        
-        // HTTP services
-        $this->router = new Router($pageController);
     }
     
     private function handleError(\Throwable $e): void

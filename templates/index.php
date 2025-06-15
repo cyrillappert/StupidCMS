@@ -15,8 +15,11 @@
         <?= ascii($foo->title); ?>
     </div>
     <div class="hero-text">
-        <div class="markdown">
-            <?= $markdown($foo->hero_text); ?>
+        <div>
+            <h2>
+
+                <?= $foo->hero_text; ?>
+            </h2>
         </div>
     </div>
 

@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace StupidCMS\Template;
 
-use StupidCMS\Util\{ImageHandler, MarkdownParser};
-
 class TemplateEngine
 {
     private string $templateDir;
-    private MarkdownParser $markdownParser;
     
-    public function __construct(?string $templateDir = null, ?MarkdownParser $markdownParser = null)
+    public function __construct(?string $templateDir = null)
     {
         $this->templateDir = $templateDir ?? dirname(__DIR__, 2) . '/templates';
-        $this->markdownParser = $markdownParser ?? new MarkdownParser(new ImageHandler());
     }
     
     public function render(string $template, array $data = []): string
@@ -59,38 +55,22 @@ class TemplateEngine
     
     private function renderFile(string $templatePath, array $data): string
     {
-        // Create isolated scope for template execution
-        $templateEngine = $this;
-        $renderTemplate = function(string $__templatePath, array $__data) use ($templateEngine) {
-            // Extract data to local scope
-            extract($__data, EXTR_SKIP);
-            
-            // For backward compatibility, set global variables
-            if (isset($__data['foo'])) {
-                $GLOBALS['foo'] = $__data['foo'];
-            }
-            if (isset($__data['currentSlug'])) {
-                $GLOBALS['currentSlug'] = $__data['currentSlug'];
-            }
-            
-            // Helper functions available in templates
-            $escape = fn($value) => $templateEngine->escape($value);
-            $markdown = fn($text, $directory = '') => $templateEngine->markdownParser->parse($text, $directory);
-            
-            ob_start();
-            try {
-                require $__templatePath;
-                return ob_get_clean();
-            } catch (\Throwable $e) {
-                ob_end_clean();
-                throw new \RuntimeException(
-                    "Error rendering template '{$__templatePath}': " . $e->getMessage(),
-                    0,
-                    $e
-                );
-            }
-        };
+        extract($data, EXTR_SKIP);
         
-        return $renderTemplate($templatePath, $data);
+        // Helper functions available in templates
+        $escape = fn($value) => $this->escape($value);
+        
+        ob_start();
+        try {
+            require $templatePath;
+            return ob_get_clean();
+        } catch (\Throwable $e) {
+            ob_end_clean();
+            throw new \RuntimeException(
+                "Error rendering template '{$templatePath}': " . $e->getMessage(),
+                0,
+                $e
+            );
+        }
     }
 }

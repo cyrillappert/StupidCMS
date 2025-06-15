@@ -189,9 +189,9 @@ hr {
   @apply uppercase mt-4;
 }
 
-.home .markdown h1,
-.home .markdown h2,
-.home .markdown p {
+.home h1,
+.home h2,
+.home p {
   text-shadow: var(--text-shadow-yellow);
 }
 

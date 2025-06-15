@@ -136,8 +136,12 @@ class SimpleContentWrapper
 
     public function render(): string
     {
-        $templateEngine = new \StupidCMS\Template\TemplateEngine();
-        $template = $this->determineTemplate();
+        static $templateEngine = null;
+        if ($templateEngine === null) {
+            $templateEngine = new \StupidCMS\Template\TemplateEngine();
+        }
+        
+        $template = $this->determineTemplate($templateEngine);
         
         return $templateEngine->render($template, [
             'foo' => $this,
@@ -145,12 +149,10 @@ class SimpleContentWrapper
         ]);
     }
 
-    private function determineTemplate(): string
+    private function determineTemplate(\StupidCMS\Template\TemplateEngine $templateEngine): string
     {
         $slug = $this->data['slug'] ?? '';
         $filename = basename($slug) ?: 'index';
-        
-        $templateEngine = new \StupidCMS\Template\TemplateEngine();
         
         // Try template matching the filename
         if ($templateEngine->exists($filename)) {

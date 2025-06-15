@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace StupidCMS\Http\Controllers;
 
-use StupidCMS\SimpleContent;
+use StupidCMS\{SimpleContent, Template\TemplateEngine};
 
-class PageController extends BaseController
+class PageController
 {
     private SimpleContent $simpleContent;
+    private TemplateEngine $templateEngine;
 
     public function __construct()
     {
-        parent::__construct();
         $this->simpleContent = new SimpleContent();
+        $this->templateEngine = new TemplateEngine();
     }
 
     public function show(string $slug): string
@@ -25,5 +26,11 @@ class PageController extends BaseController
         }
 
         return $content->render();
+    }
+
+    private function notFound(): string
+    {
+        http_response_code(404);
+        return $this->templateEngine->render('404', ['message' => 'Not found']);
     }
 }
