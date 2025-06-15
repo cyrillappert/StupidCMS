@@ -153,9 +153,22 @@ class SimpleContentWrapper
         return $this->simpleContent->getChildren($this->data['slug'] ?? '');
     }
 
+    public function render(): string
+    {
+        $templateEngine = new \StupidCMS\Template\TemplateEngine();
+        $template = $this->data['template'] ?? 'default';
+        
+        return $templateEngine->render($template, [
+            'foo' => $this,
+            'currentSlug' => $this->data['slug'] ?? ''
+        ]);
+    }
+
     public function __call(string $method, array $args): ?SimpleContentWrapper
     {
         // Handle dynamic content loading like $foo->work()
-        return $this->simpleContent->load($method);
+        $currentSlug = $this->data['slug'] ?? '';
+        $childSlug = $currentSlug ? "{$currentSlug}/{$method}" : $method;
+        return $this->simpleContent->load($childSlug);
     }
 }
