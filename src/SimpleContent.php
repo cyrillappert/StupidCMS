@@ -37,9 +37,7 @@ class SimpleContent
 
         // Process image fields
         foreach ($meta as $key => $value) {
-            if (str_ends_with($key, '_img') && is_string($value)) {
-                $meta[$key] = $this->imageHandler->process($value, $directory);
-            } elseif (is_array($value) && isset($value['type']) && $value['type'] === 'img' && isset($value['src'])) {
+            if (is_array($value) && isset($value['type']) && $value['type'] === 'img' && isset($value['src'])) {
                 $processed = $this->imageHandler->process($value['src'], $directory);
                 if ($processed) $value['src'] = $processed;
                 $meta[$key] = $value;

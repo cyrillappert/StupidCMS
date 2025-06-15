@@ -42,7 +42,6 @@ These fields have special meaning in StupidCMS:
 - `title`: Page title (defaults to capitalized slug if not provided)
 - `published`: Set to `true` to make page visible (defaults to `false`)
 - `date`: Publication date (auto-added if not provided, format: Y-m-d)
-- Fields ending with `_img`: Automatically processed as image fields
 - Fields with `type: img`: Complex image objects with src/alt properties
 
 You can add any additional custom fields you need - they'll be accessible in your templates.
