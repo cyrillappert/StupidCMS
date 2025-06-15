@@ -27,7 +27,6 @@ Create `.md` files with frontmatter (metadata) at the top:
 ---
 title: My Page Title
 published: true
-template: default
 ---
 
 # Your Content Here
@@ -39,17 +38,16 @@ Write your content in Markdown format.
 
 - `title`: Page title
 - `published`: Set to `true` to make page visible
-- `template`: Which template to use (optional, auto-detected from filename)
 
 ## 🎨 Templates
 
-Templates are PHP files in the `templates/` directory:
+Templates are automatically chosen based on your content filename:
 
-- `index.php` - Homepage template
-- `work.php` - Work/portfolio overview
-- `project.php` - Individual project pages
-- `cv.php` - CV/resume template
-- `default.php` - Fallback template
+- `index.md` → `templates/index.php`
+- `work.md` → `templates/work.php`  
+- `project.md` → `templates/project.php`
+- `cv.md` → `templates/cv.php`
+- Fallback: `templates/default.php`
 
 ### Template Variables
 
@@ -85,7 +83,7 @@ $projectContent = $foo->{$firstProject['name']}();  // Load project content dyna
 1. **Add a new page**: Create `content/my-page.md`
 2. **Add frontmatter**: Set title, published status
 3. **Write content**: Use Markdown syntax  
-4. **Create template** (optional): Add `templates/my-page.php`
+4. **Create template** (optional): Add `templates/my-page.php` to match your filename
 5. **Test**: Visit `/my-page` in your browser
 
 ## 📂 Adding Projects

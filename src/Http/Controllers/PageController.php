@@ -24,18 +24,6 @@ class PageController extends BaseController
             return $this->notFound();
         }
 
-        $template = $this->templateEngine->exists($content->template) ? $content->template : 'index';
-        
-        $templateData = [
-            'foo' => $content, 
-            'currentSlug' => $slug
-        ];
-
-        // For project templates, add the projects list for navigation
-        if ($template === 'project') {
-            $templateData['projects'] = $this->simpleContent->getChildren('work');
-        }
-
-        return $this->renderTemplate($template, $templateData);
+        return $content->render();
     }
 }

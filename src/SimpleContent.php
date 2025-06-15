@@ -48,7 +48,6 @@ class SimpleContent
 
         // Add defaults
         $meta['title'] = $meta['title'] ?? ucfirst($slug ?: 'Home');
-        $meta['template'] = $this->determineTemplate($markdownPath);
 
         $data = array_merge($meta, [
             'slug' => $slug,
@@ -99,22 +98,6 @@ class SimpleContent
         return !empty($markdownFiles) ? $markdownFiles[0] : null;
     }
 
-    private function determineTemplate(string $markdownPath): string
-    {
-        $filename = basename($markdownPath, '.md');
-        
-        $preferredTemplate = $this->templateDir . '/' . $filename . '.php';
-        if (file_exists($preferredTemplate)) {
-            return $filename;
-        }
-        
-        $defaultTemplate = $this->templateDir . '/default.php';
-        if (file_exists($defaultTemplate)) {
-            return 'default';
-        }
-        
-        return $filename;
-    }
 }
 
 class SimpleContentWrapper
@@ -156,12 +139,28 @@ class SimpleContentWrapper
     public function render(): string
     {
         $templateEngine = new \StupidCMS\Template\TemplateEngine();
-        $template = $this->data['template'] ?? 'default';
+        $template = $this->determineTemplate();
         
         return $templateEngine->render($template, [
             'foo' => $this,
             'currentSlug' => $this->data['slug'] ?? ''
         ]);
+    }
+
+    private function determineTemplate(): string
+    {
+        $slug = $this->data['slug'] ?? '';
+        $filename = basename($slug) ?: 'index';
+        
+        $templateEngine = new \StupidCMS\Template\TemplateEngine();
+        
+        // Try template matching the filename
+        if ($templateEngine->exists($filename)) {
+            return $filename;
+        }
+        
+        // Fallback to default
+        return 'default';
     }
 
     public function __call(string $method, array $args): ?SimpleContentWrapper
