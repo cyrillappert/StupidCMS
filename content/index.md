@@ -5,8 +5,7 @@ navigation:
   - url: "/"
     name: "Home"
   - url: "/cv"
-hero_text:
-  type: md
+hero_text: "## Systems with Attitude"
 featured_img:
   type: img
   src: roentgen.png
@@ -15,5 +14,3 @@ bg_img:
   type: img
   src: bg.png
 ---
-
-## Systems with Attitude

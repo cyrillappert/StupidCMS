@@ -16,7 +16,7 @@
     </div>
     <div class="hero-text">
         <div class="markdown">
-            <?= $foo->hero_text; ?>
+            <?= $markdown($foo->hero_text); ?>
         </div>
     </div>
 

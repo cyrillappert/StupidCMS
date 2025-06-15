@@ -52,7 +52,7 @@ class Application
         
         // Template services
         $this->container->registerSingleton('template_engine', fn($c) => 
-            new TemplateEngine($c->get('config'))
+            new TemplateEngine($c->get('config'), $c->get('markdown_parser'))
         );
         
         // Content services

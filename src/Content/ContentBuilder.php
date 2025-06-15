@@ -96,20 +96,6 @@ class ContentBuilder
         return $filename;
     }
 
-    private function loadMarkdownFiles(string $directory): array
-    {
-        $files = $this->fileLoader->findMarkdownFiles($directory);
-        $content = [];
-        
-        foreach ($files as $file) {
-            $name = basename($file, '.md');
-            $markdown = $this->fileLoader->loadMarkdown($file);
-            $content[$name] = $this->markdownParser->parse($markdown, $directory);
-        }
-        
-        return $content;
-    }
-
     private function buildFields(array $meta, string $slug, string $directory, string $bodyContent): array
     {
         $knownFields = ['published'];
@@ -127,7 +113,6 @@ class ContentBuilder
             if (is_array($value) && isset($value['type'])) {
                 $fields[$key] = match($value['type']) {
                     'img' => $this->processImageField($value, $directory),
-                    'md' => $this->processMarkdownField($value, $directory, $key, $bodyContent),
                     default => $value
                 };
             } elseif (str_ends_with($key, '_img') && is_string($value)) {
@@ -146,42 +131,4 @@ class ContentBuilder
         return $field;
     }
 
-    private function processMarkdownField(array $field, string $directory, string $fieldKey = '', string $bodyContent = ''): string
-    {
-        $srcFile = null;
-        
-        if (isset($field['src'])) {
-            $srcFile = $field['src'];
-        } else {
-            $srcFile = $this->findMarkdownFile($directory, $fieldKey);
-        }
-        
-        if (!$srcFile && !empty($bodyContent)) {
-            return $bodyContent;
-        }
-        
-        if (!$srcFile) return '';
-        
-        $markdown = $this->fileLoader->loadMarkdown($directory . '/' . $srcFile);
-        return $this->markdownParser->parse($markdown, $directory);
-    }
-
-    private function findMarkdownFile(string $directory, string $fieldKey): ?string
-    {
-        $candidates = [];
-        
-        if (!empty($fieldKey)) {
-            $candidates[] = $fieldKey . '.md';
-        }
-        
-        $candidates = array_merge($candidates, ['content.md', 'text.md']);
-        
-        foreach ($candidates as $candidate) {
-            if (file_exists($directory . '/' . $candidate)) {
-                return $candidate;
-            }
-        }
-        
-        return null;
-    }
 }
