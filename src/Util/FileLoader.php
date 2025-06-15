@@ -8,17 +8,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class FileLoader
 {
-    public function loadYaml(string $path): array
-    {
-        if (!file_exists($path)) return [];
-        $content = file_get_contents($path);
-        return Yaml::parse($content) ?? [];
-    }
-
-    public function loadMarkdown(string $path): string
-    {
-        return file_exists($path) ? file_get_contents($path) : '';
-    }
 
     public function loadMarkdownWithFrontmatter(string $path): array
     {
@@ -64,11 +53,6 @@ class FileLoader
         }
 
         return ['meta' => $meta, 'content' => $markdownContent];
-    }
-
-    public function findYamlFiles(string $dir): array
-    {
-        return glob("{$dir}/*.yaml") ?: [];
     }
 
     public function findMarkdownFiles(string $dir): array
