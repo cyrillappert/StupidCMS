@@ -19,10 +19,18 @@ class PageController extends BaseController
         $template = $this->getTemplate($content);
         $foo = new ContentProxy($content, $this->contentService);
 
-        return $this->renderTemplate($template, [
+        $templateData = [
             'foo' => $foo, 
             'currentSlug' => $slug
-        ]);
+        ];
+
+        // For project templates, add the projects list for navigation
+        if ($template === 'project') {
+            $workContent = $this->contentService->getContentBySlug('work');
+            $templateData['projects'] = $workContent ? $this->contentService->getChildren('work') : [];
+        }
+
+        return $this->renderTemplate($template, $templateData);
     }
 
     private function getTemplate(Content $content): string

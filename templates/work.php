@@ -11,14 +11,7 @@
     ?>
 
     <?php if ($totalProjects > 0): ?>
-        <div class="project-container">
-            <!-- Project content container that will be populated by HTMX -->
-            <div id="project-content" 
-                 hx-get="/work/project?index=0" 
-                 hx-trigger="load">
-                Loading...
-            </div>
-        </div>
+        <?= $content($children[0]['slug']) ?>
     <?php endif; ?>
 </div>
 

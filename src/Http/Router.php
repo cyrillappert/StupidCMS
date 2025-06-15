@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace StupidCMS\Http;
 
-use StupidCMS\Http\Controllers\{PageController, ProjectController};
+use StupidCMS\Http\Controllers\PageController;
 
 class Router
 {
     private array $routes = [];
 
     public function __construct(
-        private PageController $pageController,
-        private ProjectController $projectController
+        private PageController $pageController
     ) {
         $this->registerRoutes();
     }
@@ -41,6 +40,6 @@ class Router
 
     private function registerRoutes(): void
     {
-        $this->get('/work/project', [$this->projectController, 'show']);
+        // No special routes needed - content-based routing handles everything
     }
 }

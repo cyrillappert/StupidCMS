@@ -5,16 +5,19 @@ declare(strict_types=1);
 namespace StupidCMS\Template;
 
 use StupidCMS\Util\{ImageHandler, MarkdownParser};
+use StupidCMS\Content\{ContentService, ContentProxy};
 
 class TemplateEngine
 {
     private string $templateDir;
     private MarkdownParser $markdownParser;
+    private ?ContentService $contentService = null;
     
-    public function __construct(?string $templateDir = null, ?MarkdownParser $markdownParser = null)
+    public function __construct(?string $templateDir = null, ?MarkdownParser $markdownParser = null, ?ContentService $contentService = null)
     {
         $this->templateDir = $templateDir ?? dirname(__DIR__, 2) . '/templates';
         $this->markdownParser = $markdownParser ?? new MarkdownParser(new ImageHandler());
+        $this->contentService = $contentService;
     }
     
     public function render(string $template, array $data = []): string
@@ -31,6 +34,35 @@ class TemplateEngine
     public function exists(string $template): bool
     {
         return $this->resolveTemplatePath($template) !== null;
+    }
+    
+    public function renderContent(string $slug): string
+    {
+        if (!$this->contentService) {
+            throw new \RuntimeException("ContentService not available - cannot render content by slug");
+        }
+        
+        $content = $this->contentService->getContentBySlug($slug);
+        if (!$content || !$content->isPublished()) {
+            throw new \RuntimeException("Content not found or not published for slug: {$slug}");
+        }
+        
+        $template = $content->getTemplate();
+        $templatePath = $this->resolveTemplatePath($template);
+        
+        if (!$templatePath) {
+            $templatePath = $this->resolveTemplatePath('default');
+            if (!$templatePath) {
+                throw new \RuntimeException("No template found for content: {$slug}");
+            }
+        }
+        
+        $contentProxy = new ContentProxy($content, $this->contentService);
+        
+        return $this->renderFile($templatePath, [
+            'foo' => $contentProxy,
+            'currentSlug' => $slug
+        ]);
     }
     
     public function escape(mixed $value): string
@@ -75,6 +107,7 @@ class TemplateEngine
             // Helper functions available in templates
             $escape = fn($value) => $templateEngine->escape($value);
             $template = fn($name, $templateData = []) => $templateEngine->render($name, $templateData);
+            $content = fn($slug) => $templateEngine->renderContent($slug);
             $markdown = fn($text, $directory = '') => $templateEngine->markdownParser->parse($text, $directory);
             
             ob_start();

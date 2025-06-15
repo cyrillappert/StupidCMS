@@ -6,7 +6,7 @@ namespace StupidCMS\Core;
 
 use StupidCMS\Content\{ContentBuilder, ContentService};
 use StupidCMS\Http\{Router};
-use StupidCMS\Http\Controllers\{PageController, ProjectController};
+use StupidCMS\Http\Controllers\PageController;
 use StupidCMS\Template\TemplateEngine;
 use StupidCMS\Util\{FileLoader, FieldProcessor, ImageHandler, MarkdownParser};
 
@@ -39,10 +39,7 @@ class Application
         $imageHandler = new ImageHandler();
         $markdownParser = new MarkdownParser($imageHandler);
         
-        // Template services
-        $templateEngine = new TemplateEngine($templateDir, $markdownParser);
-        
-        // Content services
+        // Content services first
         $contentBuilder = new ContentBuilder(
             $contentDir,
             $templateDir,
@@ -53,12 +50,14 @@ class Application
         );
         $contentService = new ContentService($contentBuilder);
         
+        // Template services with ContentService
+        $templateEngine = new TemplateEngine($templateDir, $markdownParser, $contentService);
+        
         // Controllers
         $pageController = new PageController($contentService, $templateEngine);
-        $projectController = new ProjectController($contentService, $templateEngine);
         
         // HTTP services
-        $this->router = new Router($pageController, $projectController);
+        $this->router = new Router($pageController);
     }
     
     private function handleError(\Throwable $e): void

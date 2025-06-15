@@ -1,7 +1,7 @@
 <!-- Menu outside the blurred content -->
 <div>
     <div x-show="!menuOpen" @click="menuOpen = !menuOpen" class="ascii-art menu-trigger">
-        <?= \StupidCMS\Util\AsciiArt::symbolWithSpan('burger2', 'Menu'); ?>
+        <?= \StupidCMS\Util\AsciiArt::symbolWithSpan('burger', 'Menu'); ?>
     </div>
     <div x-show="menuOpen" x-transition @click.away="menuOpen = false" @click="menuOpen = false" class="menu">
         <!-- <ul @click.stop class="ascii-art">
