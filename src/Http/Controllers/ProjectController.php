@@ -51,14 +51,9 @@ class ProjectController extends BaseController
 
     private function renderProjectResponse(ContentProxy $workProxy, array $navigation): string
     {
-        $navHtml = $this->renderNavigation($navigation);
-        $contentHtml = $this->renderTemplate($workProxy->template, ['foo' => $workProxy]);
-        
-        return $navHtml . $contentHtml;
-    }
-
-    private function renderNavigation(array $nav): string
-    {
-        return $this->renderTemplate('partials/project-navigation', ['nav' => $nav]);
+        return $this->renderTemplate('project', [
+            'foo' => $workProxy,
+            'nav' => $navigation
+        ]);
     }
 }
