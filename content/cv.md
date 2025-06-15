@@ -11,7 +11,7 @@ Technikaffiner Mediengestalter mit fundierter Erfahrung in LINUX und Unix System
 
 ---
 
-## **Berufserfahrung**
+## **Erfahrung**
 
 ### Seit 2022
 

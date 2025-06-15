@@ -3,7 +3,6 @@ title: "Artasio"
 published: true
 test:
   type: md
-  ascii_headings:
 ---
 
 ## Alpine Media Infrastructure
