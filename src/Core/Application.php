@@ -12,83 +12,53 @@ use StupidCMS\Util\{FileLoader, FieldProcessor, ImageHandler, MarkdownParser};
 
 class Application
 {
-    private Container $container;
+    private Router $router;
     
     public function __construct()
     {
-        $this->container = new Container();
-        $this->registerServices();
+        $this->initializeServices();
     }
     
     public function run(): void
     {
         try {
-            $router = $this->container->get('router');
-            $router->run();
+            $this->router->run();
         } catch (\Throwable $e) {
             $this->handleError($e);
         }
     }
     
-    public function getContainer(): Container
-    {
-        return $this->container;
-    }
-    
-    private function registerServices(): void
+    private function initializeServices(): void
     {
         $contentDir = dirname(__DIR__, 2) . '/content';
         $templateDir = dirname(__DIR__, 2) . '/templates';
         
         // Utility services
-        $this->container->registerSingleton('file_loader', fn() => new FileLoader());
-        $this->container->registerSingleton('field_processor', fn() => new FieldProcessor());
-        $this->container->registerSingleton('image_handler', fn() => new ImageHandler());
-        $this->container->registerSingleton('markdown_parser', fn($c) => 
-            new MarkdownParser($c->get('image_handler'))
-        );
+        $fileLoader = new FileLoader();
+        $fieldProcessor = new FieldProcessor();
+        $imageHandler = new ImageHandler();
+        $markdownParser = new MarkdownParser($imageHandler);
         
         // Template services
-        $this->container->registerSingleton('template_engine', fn($c) => 
-            new TemplateEngine($templateDir, $c->get('markdown_parser'))
-        );
+        $templateEngine = new TemplateEngine($templateDir, $markdownParser);
         
         // Content services
-        $this->container->registerSingleton('content_builder', fn($c) => 
-            new ContentBuilder(
-                $contentDir,
-                $templateDir,
-                $c->get('file_loader'),
-                $c->get('field_processor'),
-                $c->get('image_handler'),
-                $c->get('markdown_parser')
-            )
+        $contentBuilder = new ContentBuilder(
+            $contentDir,
+            $templateDir,
+            $fileLoader,
+            $fieldProcessor,
+            $imageHandler,
+            $markdownParser
         );
-        $this->container->registerSingleton('content_service', fn($c) => 
-            new ContentService($c->get('content_builder'))
-        );
+        $contentService = new ContentService($contentBuilder);
         
         // Controllers
-        $this->container->registerSingleton('page_controller', fn($c) => 
-            new PageController(
-                $c->get('content_service'),
-                $c->get('template_engine')
-            )
-        );
-        $this->container->registerSingleton('project_controller', fn($c) => 
-            new ProjectController(
-                $c->get('content_service'),
-                $c->get('template_engine')
-            )
-        );
+        $pageController = new PageController($contentService, $templateEngine);
+        $projectController = new ProjectController($contentService, $templateEngine);
         
         // HTTP services
-        $this->container->registerSingleton('router', fn($c) => 
-            new Router(
-                $c->get('page_controller'),
-                $c->get('project_controller')
-            )
-        );
+        $this->router = new Router($pageController, $projectController);
     }
     
     private function handleError(\Throwable $e): void
