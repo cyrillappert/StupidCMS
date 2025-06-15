@@ -4,38 +4,38 @@ declare(strict_types=1);
 
 namespace StupidCMS\Http\Controllers;
 
-use StupidCMS\Content\{Content, ContentProxy};
+use StupidCMS\SimpleContent;
 
 class PageController extends BaseController
 {
+    private SimpleContent $simpleContent;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->simpleContent = new SimpleContent();
+    }
+
     public function show(string $slug): string
     {
-        $content = $this->contentService->getContentBySlug($slug);
+        $content = $this->simpleContent->load($slug);
 
-        if (!$content || !$content->isPublished()) {
+        if (!$content || !$content->published) {
             return $this->notFound();
         }
 
-        $template = $this->getTemplate($content);
-        $foo = new ContentProxy($content, $this->contentService);
-
+        $template = $this->templateEngine->exists($content->template) ? $content->template : 'index';
+        
         $templateData = [
-            'foo' => $foo, 
+            'foo' => $content, 
             'currentSlug' => $slug
         ];
 
         // For project templates, add the projects list for navigation
         if ($template === 'project') {
-            $workContent = $this->contentService->getContentBySlug('work');
-            $templateData['projects'] = $workContent ? $this->contentService->getChildren('work') : [];
+            $templateData['projects'] = $this->simpleContent->getChildren('work');
         }
 
         return $this->renderTemplate($template, $templateData);
-    }
-
-    private function getTemplate(Content $content): string
-    {
-        $template = $content->getTemplate();
-        return $this->templateEngine->exists($template) ? $template : 'index';
     }
 }

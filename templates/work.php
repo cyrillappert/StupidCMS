@@ -11,7 +11,18 @@
     ?>
 
     <?php if ($totalProjects > 0): ?>
-        <?= $content($children[0]['slug']) ?>
+        <?php 
+        $firstProject = $children[0];
+        $projectContent = $foo->root()->{$firstProject['name']}();
+        ?>
+        <?php if ($projectContent): ?>
+            <div class="project-preview">
+                <h2><?= $escape($firstProject['title']) ?></h2>
+                <div class="markdown">
+                    <?= $projectContent->body ?>
+                </div>
+            </div>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 

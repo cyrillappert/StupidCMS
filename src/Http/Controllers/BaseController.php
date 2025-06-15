@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace StupidCMS\Http\Controllers;
 
-use StupidCMS\Content\ContentService;
 use StupidCMS\Template\TemplateEngine;
 
 abstract class BaseController
 {
     public function __construct(
-        protected ContentService $contentService,
-        protected TemplateEngine $templateEngine
-    ) {}
+        protected ?TemplateEngine $templateEngine = null
+    ) {
+        $this->templateEngine = $templateEngine ?? new TemplateEngine();
+    }
 
     protected function renderTemplate(string $template, array $data = []): string
     {
