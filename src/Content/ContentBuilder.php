@@ -56,12 +56,9 @@ class ContentBuilder
 
     private function resolveMarkdownPath(string $slug): ?string
     {
-        if ($slug === 'index') {
-            $directPath = "{$this->contentDir}/index.md";
-            if (file_exists($directPath)) return $directPath;
-            
-            $dir = "{$this->contentDir}/index";
-            $markdownFiles = $this->fileLoader->findMarkdownFiles($dir);
+        if ($slug === '') {
+            // For root/homepage, look directly in content directory
+            $markdownFiles = $this->fileLoader->findMarkdownFiles($this->contentDir);
             return !empty($markdownFiles) ? $markdownFiles[0] : null;
         }
 

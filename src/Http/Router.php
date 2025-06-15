@@ -36,7 +36,7 @@ class Router
         }
 
         // Fall back to content-based routing
-        echo $this->pageController->show($uri === '' ? 'index' : $uri);
+        echo $this->pageController->show($uri);
     }
 
     private function registerRoutes(): void
