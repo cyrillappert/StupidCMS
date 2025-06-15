@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Define application root and web root
+APP_ROOT="odermatt:/var/www/cyrillappert.ch/"
+WEB_ROOT="odermatt:/var/www/cyrillappert.ch/public/"
+
+# Define source directories for app root (outside web directory)
+APP_DIRS=("content" "src" "templates" "vendor" "bootstrap.php" "composer.json" "composer.lock")
+
+# Sync application directories to app root
+for DIR in "${APP_DIRS[@]}"; do
+    if [ "$DIR" == "src" ]; then
+        # Sync src directory from local to remote, excluding cache and temp files
+        echo "Syncing $DIR to app root (excluding cache and temp files)..."
+        rsync -avz --progress --exclude="cache" --exclude="temp" --exclude="node_modules" "./$DIR" --rsync-path="sudo rsync" "$APP_ROOT"
+    else
+        # Sync directories to app root
+        echo "Syncing $DIR to app root..."
+        rsync -avz --progress "./$DIR" --rsync-path="sudo rsync" "$APP_ROOT"
+    fi
+done
+
+# Sync public directory contents to web root
+echo "Syncing public directory contents to web root..."
+rsync -avz --progress "./public/" "$WEB_ROOT"
+
+# Set up media directory permissions
+echo "Setting up media directory permissions..."
+ssh odermatt "sudo mkdir -p /var/www/cyrillappert.ch/public/media"
+ssh odermatt "sudo chown -R www-data:www-data /var/www/cyrillappert.ch/public/media"
+ssh odermatt "sudo chmod -R 755 /var/www/cyrillappert.ch/public/media"
