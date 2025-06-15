@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/partials/head.php'; ?>
 
-<div class="page default">
+<div class="page text-white default">
     <div class="content">
         <h1><?= $escape($foo->title ?? 'Page') ?></h1>
         <div class="markdown">

@@ -43,11 +43,13 @@ class ContentBuilder
         $body = $this->markdownParser->parse($parsed['content'], $directory);
         $template = $this->determineTemplate($markdownPath);
         
-        $fields = $this->buildFields($meta, $slug, $directory, $body);
+        // For homepage (empty slug), use the filename as the effective slug for field processing
+        $effectiveSlug = $slug === '' ? basename($markdownPath, '.md') : $slug;
+        $fields = $this->buildFields($meta, $effectiveSlug, $directory, $body);
         
         return new Content(
             body: $body,
-            slug: $slug,
+            slug: $slug, // Keep original slug for URL routing
             published: $meta['published'] ?? false,
             template: $template,
             customFields: $fields

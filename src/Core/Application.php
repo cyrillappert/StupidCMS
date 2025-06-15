@@ -57,7 +57,14 @@ class Application
         
         // Content services
         $this->container->registerSingleton('content_builder', fn($c) => 
-            new ContentBuilder($c->get('config')->get('content_dir'))
+            new ContentBuilder(
+                $c->get('config')->get('content_dir'),
+                $c->get('config'),
+                $c->get('file_loader'),
+                $c->get('field_processor'),
+                $c->get('image_handler'),
+                $c->get('markdown_parser')
+            )
         );
         $this->container->registerSingleton('content_service', fn($c) => 
             new ContentService($c->get('content_builder'))

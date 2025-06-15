@@ -5,6 +5,7 @@
   :root, :host {
     --font-sans: 'Suisse Intl', sans-serif;
     --font-mono: 'Roboto Mono', monospace;
+    --color-white: #F1F1F1;
     --spacing: 0.25rem;
     --container-lg: 32rem;
     --container-2xl: 42rem;
@@ -238,6 +239,9 @@
   }
   .resize {
     resize: both;
+  }
+  .text-white {
+    color: var(--color-white);
   }
   .lowercase {
     text-transform: lowercase;

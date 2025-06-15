@@ -86,7 +86,7 @@ class ContentProxy
 
     private function getRoot(): ContentProxy
     {
-        $rootContent = $this->contentService->getContentBySlug('index');
+        $rootContent = $this->contentService->getContentBySlug('');
         return new ContentProxy($rootContent, $this->contentService);
     }
 }

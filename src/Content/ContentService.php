@@ -28,7 +28,7 @@ class ContentService
     public function getChildren(string $slug): array
     {
         $contentDir = Config::getInstance()->get('content_dir');
-        $directory = $slug === 'index' 
+        $directory = $slug === '' 
             ? $contentDir 
             : $contentDir . '/' . $slug;
             
@@ -39,7 +39,7 @@ class ContentService
             $childSlug = basename($dir);
             if (!$this->fileLoader->hasContent($dir)) continue;
             
-            $fullSlug = $slug === 'index' ? $childSlug : "{$slug}/{$childSlug}";
+            $fullSlug = $slug === '' ? $childSlug : "{$slug}/{$childSlug}";
             $child = $this->getContentBySlug($fullSlug);
             $title = $child->title ?? ucfirst($childSlug);
             
@@ -57,7 +57,7 @@ class ContentService
     public function getImages(string $slug): array
     {
         $contentDir = Config::getInstance()->get('content_dir');
-        $directory = $slug === 'index' 
+        $directory = $slug === '' 
             ? $contentDir 
             : $contentDir . '/' . $slug;
             
