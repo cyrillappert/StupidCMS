@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace StupidCMS\Content;
 
-use StupidCMS\Core\Config;
 use StupidCMS\Util\{FileLoader, FieldProcessor, ImageHandler, MarkdownParser};
 
 class ContentBuilder
 {
     private string $contentDir;
-    private Config $config;
+    private string $templateDir;
     private FileLoader $fileLoader;
     private FieldProcessor $fieldProcessor;
     private ImageHandler $imageHandler;
@@ -18,14 +17,14 @@ class ContentBuilder
 
     public function __construct(
         string $contentDir,
-        ?Config $config = null,
+        ?string $templateDir = null,
         ?FileLoader $fileLoader = null,
         ?FieldProcessor $fieldProcessor = null,
         ?ImageHandler $imageHandler = null,
         ?MarkdownParser $markdownParser = null
     ) {
         $this->contentDir = rtrim($contentDir, '/');
-        $this->config = $config ?? Config::getInstance();
+        $this->templateDir = $templateDir ?? dirname(__DIR__, 2) . '/templates';
         $this->fileLoader = $fileLoader ?? new FileLoader();
         $this->fieldProcessor = $fieldProcessor ?? new FieldProcessor();
         $this->imageHandler = $imageHandler ?? new ImageHandler();
@@ -77,15 +76,14 @@ class ContentBuilder
         $filename = basename($markdownPath, '.md');
         
         // Check if template with filename exists
-        $templateDir = $this->config->get('template_dir');
-        $preferredTemplate = $templateDir . '/' . $filename . '.php';
+        $preferredTemplate = $this->templateDir . '/' . $filename . '.php';
         
         if (file_exists($preferredTemplate)) {
             return $filename;
         }
         
         // Fallback to default template if it exists
-        $defaultTemplate = $templateDir . '/default.php';
+        $defaultTemplate = $this->templateDir . '/default.php';
         if (file_exists($defaultTemplate)) {
             return 'default';
         }

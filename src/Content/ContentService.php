@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace StupidCMS\Content;
 
-use StupidCMS\Core\Config;
 use StupidCMS\Util\FileLoader;
 
 class ContentService
 {
     private ContentBuilder $builder;
     private FileLoader $fileLoader;
+    private string $contentDir;
+    private array $imageExtensions;
 
     public function __construct(
         ?ContentBuilder $builder = null,
         ?FileLoader $fileLoader = null
     ) {
-        $this->builder = $builder ?? new ContentBuilder(Config::getInstance()->get('content_dir'));
+        $this->contentDir = dirname(__DIR__, 2) . '/content';
+        $this->imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
+        $this->builder = $builder ?? new ContentBuilder($this->contentDir);
         $this->fileLoader = $fileLoader ?? new FileLoader();
     }
 
@@ -27,10 +30,9 @@ class ContentService
 
     public function getChildren(string $slug): array
     {
-        $contentDir = Config::getInstance()->get('content_dir');
         $directory = $slug === '' 
-            ? $contentDir 
-            : $contentDir . '/' . $slug;
+            ? $this->contentDir 
+            : $this->contentDir . '/' . $slug;
             
         if (!is_dir($directory)) return [];
 
@@ -56,17 +58,15 @@ class ContentService
 
     public function getImages(string $slug): array
     {
-        $contentDir = Config::getInstance()->get('content_dir');
         $directory = $slug === '' 
-            ? $contentDir 
-            : $contentDir . '/' . $slug;
+            ? $this->contentDir 
+            : $this->contentDir . '/' . $slug;
             
         if (!is_dir($directory)) return [];
 
-        $extensions = Config::getInstance()->get('image_extensions');
         $images = [];
 
-        foreach ($extensions as $ext) {
+        foreach ($this->imageExtensions as $ext) {
             $files = glob("{$directory}/*.{$ext}", GLOB_BRACE | GLOB_NOCHECK);
             foreach ($files as $file) {
                 if (file_exists($file)) {

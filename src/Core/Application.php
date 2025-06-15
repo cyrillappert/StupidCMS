@@ -13,11 +13,9 @@ use StupidCMS\Util\{FileLoader, FieldProcessor, ImageHandler, MarkdownParser};
 class Application
 {
     private Container $container;
-    private Config $config;
     
     public function __construct()
     {
-        $this->config = Config::getInstance();
         $this->container = new Container();
         $this->registerServices();
     }
@@ -39,8 +37,8 @@ class Application
     
     private function registerServices(): void
     {
-        // Core services
-        $this->container->registerSingleton('config', fn() => $this->config);
+        $contentDir = dirname(__DIR__, 2) . '/content';
+        $templateDir = dirname(__DIR__, 2) . '/templates';
         
         // Utility services
         $this->container->registerSingleton('file_loader', fn() => new FileLoader());
@@ -52,14 +50,14 @@ class Application
         
         // Template services
         $this->container->registerSingleton('template_engine', fn($c) => 
-            new TemplateEngine($c->get('config'), $c->get('markdown_parser'))
+            new TemplateEngine($templateDir, $c->get('markdown_parser'))
         );
         
         // Content services
         $this->container->registerSingleton('content_builder', fn($c) => 
             new ContentBuilder(
-                $c->get('config')->get('content_dir'),
-                $c->get('config'),
+                $contentDir,
+                $templateDir,
                 $c->get('file_loader'),
                 $c->get('field_processor'),
                 $c->get('image_handler'),
@@ -95,12 +93,8 @@ class Application
     
     private function handleError(\Throwable $e): void
     {
-        if ($this->config->get('debug')) {
-            echo '<pre>' . $e->getMessage() . "\n" . $e->getTraceAsString() . '</pre>';
-        } else {
-            http_response_code(500);
-            echo 'Internal Server Error';
-        }
+        http_response_code(500);
+        echo 'Internal Server Error';
         
         error_log($e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
     }

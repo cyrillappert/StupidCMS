@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace StupidCMS\Template;
 
-use StupidCMS\Core\Config;
 use StupidCMS\Util\{ImageHandler, MarkdownParser};
 
 class TemplateEngine
 {
-    private Config $config;
     private string $templateDir;
     private MarkdownParser $markdownParser;
     
-    public function __construct(?Config $config = null, ?MarkdownParser $markdownParser = null)
+    public function __construct(?string $templateDir = null, ?MarkdownParser $markdownParser = null)
     {
-        $this->config = $config ?? Config::getInstance();
-        $this->templateDir = $this->config->get('template_dir');
+        $this->templateDir = $templateDir ?? dirname(__DIR__, 2) . '/templates';
         $this->markdownParser = $markdownParser ?? new MarkdownParser(new ImageHandler());
     }
     
