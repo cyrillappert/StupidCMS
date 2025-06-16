@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Default values
+HOST="localhost"
+PORT="3003"
+DETACHED=false
+KILL_ONLY=false
+
+# Parse flags
+while getopts "dkh:p:" flag; do
+  case "${flag}" in
+    d) DETACHED=true ;;
+    k) KILL_ONLY=true ;;
+    h) HOST="${OPTARG}" ;;
+    p) PORT="${OPTARG}" ;;
+  esac
+done
+
+# Kill any existing tmux session
+if tmux has-session -t dev 2>/dev/null; then
+  tmux kill-session -t dev
+
+  if [ "$KILL_ONLY" = true ]; then
+    exit 0
+  fi
+fi
+
+# Exit if kill only
+if [ "$KILL_ONLY" = true ]; then
+  exit 0
+fi
+
+# Create a new tmux session
+tmux new-session -d -s dev
+
+# Split the window horizontally
+tmux split-window -t dev
+
+# Start PHP server in the first pane with error logging
+tmux send-keys -t dev:0.0 "php -S ${HOST}:${PORT} -t public -d log_errors=1 -d error_log=error.log" C-m
+
+# Start Tailwind CSS watcher in the second pane
+tmux send-keys -t dev:0.1 './tailwindcss -i index.css -o public/css/main.css --watch' C-m
+
+# Attach to the tmux session if not in detached mode
+if [ "$DETACHED" = false ]; then
+  tmux attach-session -t dev
+fi
+

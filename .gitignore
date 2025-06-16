@@ -1,0 +1,7 @@
+.DS_Store
+vendor
+tailwindcss
+public/error.log
+CLAUDE.MD
+main.css
+deploy

@@ -1,0 +1,23 @@
+{
+    "name": "cyrillappert/stupid-cms",
+    "description": "A stupidly simple CMS",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "StupidCMS\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Cyrill Appert",
+            "email": "cyrill@phasewas.ch"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "erusev/parsedown-extra": "^0.8.1",
+        "vlucas/phpdotenv": "^5.6",
+        "symfony/yaml": "^7.3"
+    }
+}

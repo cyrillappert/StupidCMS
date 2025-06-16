@@ -1,0 +1,141 @@
+@import "tailwindcss";
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-RegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Suisse Intl';
+  src: url('/fonts/SuisseIntl-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('/fonts/SourceCodePro-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@theme {
+  --font-sans: 'Suisse Intl', sans-serif;
+  --font-mono: 'Source Code Pro', monospace;
+  
+  --color-yellow: #e1ff06;
+  --color-red: #FC0001;
+  --color-blue: #1A1AFF;
+  --color-light-gray: #D9D9D9;
+  --color-dark-gray: #434343;
+  --color-full-black: #000000;
+  --color-full-white: #FFFFFF;
+  --color-purple: rgb(160, 0, 255);
+  
+  --text-shadow-yellow: 
+    -2px -2px 0 var(--color-yellow), -1px -2px 0 var(--color-yellow), 0px -2px 0 var(--color-yellow), 1px -2px 0 var(--color-yellow), 2px -2px 0 var(--color-yellow),
+    -2px -1px 0 var(--color-yellow), 2px -1px 0 var(--color-yellow),
+    -2px 0px 0 var(--color-yellow), 2px 0px 0 var(--color-yellow),
+    -2px 1px 0 var(--color-yellow), 2px 1px 0 var(--color-yellow),
+    -2px 2px 0 var(--color-yellow), -1px 2px 0 var(--color-yellow), 0px 2px 0 var(--color-yellow), 1px 2px 0 var(--color-yellow), 2px 2px 0 var(--color-yellow);
+}
+
+@utility text-shadow-yellow {
+  text-shadow: var(--text-shadow-yellow);
+}
+
+.container {  
+  @apply w-full max-w-3xl mx-auto px-4 py-8;
+}
+.markdown h2 {
+  @apply italic uppercase text-3xl sm:text-6xl mb-4;
+}
+
+.markdown.project h2,
+.markdown.project h3 {
+  @apply text-shadow-yellow;
+}
+
+.markdown h3 {
+  @apply text-3xl sm:text-4xl uppercase italic mt-2 mb-4 font-bold;
+}
+
+.markdown h4 {
+  @apply text-2xl mt-2 mb-2 font-bold;
+}
+
+.markdown h5 {
+  @apply text-sm font-bold mb-2;
+}
+
+.markdown p {
+  @apply mb-4;
+}
+
+.markdown hr {
+  @apply my-8;
+}
+
+.markdown ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.markdown ol {
+  @apply list-decimal pl-6 mb-4;
+}
+
+.markdown li {
+  @apply mb-1;
+}
+
+.markdown a {
+  @apply text-shadow-yellow
+}
+
+.markdown img {
+}
+
+.markdown pre  {
+  @apply text-xs sm:text-base bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.image-group {
+  @apply grid grid-cols-3 gap-4 my-8;
+}
+
+.image-group .img-small {
+  @apply col-span-1;
+}
+.image-group .img-medium {
+  @apply col-span-2;
+}
+.image-group .img-large {
+  @apply col-span-3;
+}
+
+a:focus {
+  outline: none;
+}
