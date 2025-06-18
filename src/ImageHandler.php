@@ -18,22 +18,28 @@ class ImageHandler
 
     public function processInMarkdown(string $markdown, string $contentDir): string
     {
-        return preg_replace_callback('/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/', 
-            fn($matches) => $this->handleImageMatch($matches, $contentDir), $markdown);
+        return preg_replace_callback(
+            '/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/',
+            fn($matches) => $this->handleImageMatch($matches, $contentDir),
+            $markdown
+        );
     }
 
     public function addSizeClasses(string $html): string
     {
         // Extract size from alt attribute and add class directly
-        $html = preg_replace_callback('/<img([^>]+)alt="(large|medium|small):([^"]*)"([^>]*)>/i',
-            fn($matches) => $this->addSizeClassFromAlt($matches), $html);
-        
+        $html = preg_replace_callback(
+            '/<img([^>]+)alt="(large|medium|small):([^"]*)"([^>]*)>/i',
+            fn($matches) => $this->addSizeClassFromAlt($matches),
+            $html
+        );
+
         // Remove paragraph wrappers around images
         $html = preg_replace('/<p>(<img[^>]*>)<\/p>/', '$1', $html);
-        
+
         // Wrap consecutive images
         $html = preg_replace('/(<img[^>]*>\s*)+/', '<div class="image-group">$0</div>', $html);
-        
+
         return $html;
     }
 
@@ -72,9 +78,8 @@ class ImageHandler
     private function addSizeClassFromAlt(array $matches): string
     {
         [$full, $before, $size, $cleanAlt, $after] = $matches;
-        
+
         $class = ' class="img-' . $size . '"';
         return '<img' . $before . 'alt="' . $cleanAlt . '"' . $class . $after . '>';
     }
-
 }

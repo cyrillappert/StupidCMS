@@ -15,11 +15,11 @@ tags:
 
 Did graphics and some recording/mixing for my former band Mr. Leader & Orchestra. Standard band work - posters, album covers, promotional materials.
 
-![medium:Band poster design](mr-leader-04.png)
+![medium:Front view of a Mr Leader CD](mr-leader-04.png)
 
-![small:Band poster design](mr-leader-03.png)
+![small:Front view of a Mr Leader CD](mr-leader-03.png)
 
 Handled visual identity and helped with recording sessions. 
 
 
-![small:Concert poster](mr-leader-07.png)
+![small:View of the Mr Leader CD](mr-leader-07.png)

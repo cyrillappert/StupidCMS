@@ -16,15 +16,16 @@ tags:
 Did visual communication and booking for Kultling, a small independent music festival in Kreuzlingen. Worked on it from 2020 to 2022.
 
 
-![medium:Festival poster design](kultling-08.png)
+![medium:Poster for Kultling Festival 2021](kultling-08.png)
 
-![small:Festival poster design](kultling-02.png)
+![small:Poster for Kultling Festival 2022](kultling-02.png)
 
 Handled the visual identity, posters, and artist booking. Small festival, so you do everything - design, logistics, artist communication.
 
 
-![small:Festival poster design](kultling-07.png)
 
-![small:Festival poster design](kultling-11.png)
+![small:Instagram post for Kultling Festival 2021](kultling-11.png)
 
-![small:Festival poster design](kultling-04.png)
+![small:Instagram post for Kultling Festival 2021](kultling-07.png)
+
+![small:Instagram story for Kultling Festival 2021](kultling-04.png)

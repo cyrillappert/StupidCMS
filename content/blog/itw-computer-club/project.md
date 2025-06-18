@@ -16,11 +16,11 @@ tags:
 
 Run a computer club as a Freifach at the school where I work. Open workshop format where students work on projects they like - Raspberry Pi, Arduino, photogrammetry.
 
-![medium:Students working on Raspberry Pi projects](itw-2.png)
+![medium:Students working on maker projects](itw-2.png)
 
 Students choose their own projects while I provide support and suggestions. More about exploration than following strict curriculum.
 
 
-![small:Students working on Raspberry Pi projects](itw-1.png)
+![small:Arduino with a small screen attached](itw-1.png)
 
-![medium:Students working on Raspberry Pi projects](itw-3.png)
+![medium:3d Scan of a tree trunk](itw-3.png)

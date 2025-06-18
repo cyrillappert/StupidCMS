@@ -14,7 +14,7 @@ tags:
 ## BOOM
 ### Bachelor Project
 
-![medium:Industrial site](boom-12.png)
+![medium:Book cover of the Book Boom](boom-12.png)
 
 
 A collaborative bachelor project exploring the industrial heritage of Rheinsulz near Laufenburg on the High Rhine. Working with Eveline Schumacher and Mario Trachsel, we documented an industrial site caught between railway tracks and the Rhine riverbank.
@@ -24,14 +24,14 @@ A collaborative bachelor project exploring the industrial heritage of Rheinsulz 
 Since 1960, five medium-sized companies experienced different economic booms, declines, and new beginnings on what is now the Astra Tech AG site. What remained were traces of the coming and going of the businesses that operated here.
 
 
-![medium:Archive materials](boom-05.png)
+![medium:Contruction site of tunnel](boom-05.png)
 
-![small:Technical drawings](boom-04.png)
+![small:Construction site of a mountain](boom-04.png)
 
 ### The Book
 
 The end product was a book featuring fictionalized theatre-style dialogues written from interviews we conducted with people connected to the site. These conversations brought the industrial stories to life, creating a narrative bridge between past and present.
 
-![medium:Archive materials](boom-08.png)
+![medium:View from the book.](boom-08.png)
 
-![medium:Technical drawings](boom-10.png)
+![medium:Exhibition view for the project](boom-10.png)
