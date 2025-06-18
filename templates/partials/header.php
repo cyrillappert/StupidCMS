@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= ($foo->slug ?? '') === 'index' ? $foo->title : $foo->root()->title . ' - ' . $foo->title ?></title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/nice.css">
 </head>
 
-<body class="<?= ($foo->slug == 'cv') ? 'bg-yellow' : 'bg-light-gray' ?> dark:bg-full-black" x-data="{ menuOpen: false }">
+<body class="<?= ($foo->slug == 'cv') ? 'bg-yellow dark:text-yellow dark:bg-dark-gray' : 'bg-light-gray dark:bg-full-black' ?>" x-data="{ menuOpen: false }">
 
 
 

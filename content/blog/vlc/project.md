@@ -14,9 +14,9 @@ tags:
 
 ## Alpine Media Player
 
-![medium:Hasliberg Mountain View](artasio-03.png)
+![medium:Raspberry Pi Media Player in development](artasio-03.png)
 
-![small:Hasliberg Mountain View](artasio-02.png)
+![small:Cyrill Appert and Paul Flück installing the Players in Hasliberg](artasio-02.png)
 
 Built a media player for outdoor use at Hasliberg. Needed something that would just work in alpine conditions without babysitting.
 

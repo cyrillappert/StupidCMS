@@ -1,5 +1,5 @@
 <!-- Menu outside the blurred content -->
-<nav class="leading-none<?= ($foo->slug === 'index') ? ' text-dark-gray' : '' ?> text-[7px] sm:text-sm text-shadow-yellow">
+<nav class="leading-none<?= ($foo->slug === 'index') ? ' text-dark-gray' : '' ?> text-[7px] sm:text-sm <?= ($foo->slug == 'cv') ? 'dark:text-dark-gray' : '' ?> text-shadow-yellow">
     <span x-show="!menuOpen" @click="menuOpen = !menuOpen" class="z-1 text-[3px] sm:text-[5px] lg:text-[7px] m-2 fixed top-1 right-1 cursor-pointer">
         <?= StupidCMS\AsciiArt::symbolWithSpan('burger', 'Menu'); ?>
     </span>

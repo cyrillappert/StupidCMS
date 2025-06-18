@@ -2,7 +2,7 @@
 
 <?php include __DIR__ . '/partials/page_title.php'; ?>
 
-<div class="markdown container">
+<div class="markdown cv container">
     <?= $foo->getBody(); ?>
 </div>
 

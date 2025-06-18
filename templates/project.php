@@ -7,7 +7,7 @@
     </div>
 <?php endif; ?>
 
-<div class="container project markdown">
+<div class="container dark:text-white project markdown">
     <?= $foo->getBody() ?>
 </div>
 

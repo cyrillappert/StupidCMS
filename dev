@@ -40,7 +40,7 @@ tmux split-window -t dev
 tmux send-keys -t dev:0.0 "php -S ${HOST}:${PORT} -t public -d log_errors=1 -d error_log=error.log" C-m
 
 # Start Tailwind CSS watcher in the second pane
-tmux send-keys -t dev:0.1 './tailwindcss -i index.css -o public/css/main.css --watch' C-m
+tmux send-keys -t dev:0.1 './tailwindcss -i index.css -o public/css/nice.css --watch' C-m
 
 # Attach to the tmux session if not in detached mode
 if [ "$DETACHED" = false ]; then

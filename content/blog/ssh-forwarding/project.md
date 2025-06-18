@@ -15,7 +15,7 @@ tags:
 
 Had a project where a Raspberry Pi needed to be accessible remotely over a mobile connection. No fixed IP, no port forwarding possible on the mobile carrier. SSH forwarding solved this cleanly.
 
-![medium:SSH tunnel setup](ssh.png)
+![medium:Raspberry Pi Zero with LTE Module attached to a power bank](ssh.png)
 
 The Pi connects out to a server with a public IP, establishing a reverse tunnel. Then you can access the Pi from anywhere through that server.
 

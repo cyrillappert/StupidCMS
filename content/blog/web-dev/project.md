@@ -18,30 +18,30 @@ Some web development work for various projects. Prefer using [KirbyCMS](https://
 
 Kirby's file-based approach works better for simple sites. No database overhead, just files and folders.
 
-![medium:Website development example](wnwd-01.png)
+![medium:Screenshot of wnwd.org](wnwd-01.png)
 
-![medium:Website development example](wnwd-02.png)
+![medium:Screenshot of wndwd.org](wnwd-02.png)
 
-[World Nuclear Waste Day](https://getkirby.com) by Jules Spinatsch
+[World Nuclear Waste Day](https://wnwd.org) by Jules Spinatsch
 
-![medium:Website development example](loreleyfilms-03.png)
+![medium:Screenshot of loreleyfilms.ch](loreleyfilms-03.png)
 
-![medium:Website development example](loreleyfilms-04.png)
+![medium:Screenshot of loreleyfilms.ch](loreleyfilms-04.png)
 
 [Loreley Films](https://loreleyfilms.ch) 
 
 
-![medium:Website development example](praxis-im-z-02.png)
+![medium:Screenshot of praxis-amriswil.ch](praxis-im-z-02.png)
 
-![medium:Website development example](praxis-im-z-04.png)
+![medium:Screenshot of praxis-amriswil.ch](praxis-im-z-04.png)
 
 [Praxis im Zentrum](praxis-amriswil.ch) 
 
 
-![medium:Website development example](star1.png)
+![medium:Screenshot of star-divers.com](star1.png)
 
-![medium:Website development example](star2.png)
+![medium:Screenshot of star-divers.com](star2.png)
 
-[Star Divers](star-divers.ch) 
+[Star Divers](star-divers.com) 
 
 And many more 😅

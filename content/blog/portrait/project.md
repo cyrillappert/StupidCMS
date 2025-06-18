@@ -15,18 +15,18 @@ tags:
 
 Some portrait photography work. Standard studio and location setups.
 
-![large:](portrait-12.png)
+![large:Basil Zecchinel sitting in front of a tree](portrait-12.png)
 
-![small:](portrait-01.png)
+![small:Black and white headshot of Alex Grüning](portrait-01.png)
 
-![small:](portrait-03.png)
+![small:The Band Dubmnent standing in a field at night](portrait-03.png)
 
-![small:](portrait-06.png)
-
-
-![small:](portrait-11.png)
+![small:DJ Jil Corti standing in the Hardturmbrache in Zurich](portrait-06.png)
 
 
-![small:](portrait-17.png)
+![small:Headshot of Basil Zecchinel](portrait-11.png)
 
-![small:](portrait-22.png)
+
+![small:Headshot of DJ Vera Amberg](portrait-17.png)
+
+![small:DJ Jil Corti sitting on a chair on the rooftop of ZHDK](portrait-22.png)
