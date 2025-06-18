@@ -15,7 +15,7 @@ tags:
 
 Some portrait photography work. Standard studio and location setups.
 
-![large:Basil Zecchinel sitting in front of a tree](portrait-12.png)
+![medium:Basil Zecchinel sitting in front of a tree](portrait-12.png)
 
 ![small:Black and white headshot of Alex Grüning](portrait-01.png)
 

@@ -52,7 +52,7 @@ class ImageHandler
         $destPath = $this->mediaDir . '/' . $filename;
 
         if (!file_exists($destPath) || filemtime($sourcePath) > filemtime($destPath)) {
-            copy($sourcePath, $destPath);
+            $this->resizeAndCopy($sourcePath, $destPath);
         }
 
         return "/media/$filename";
@@ -69,7 +69,7 @@ class ImageHandler
         $destPath = $this->mediaDir . '/' . $filename;
 
         if (!file_exists($destPath) || filemtime($sourcePath) > filemtime($destPath)) {
-            copy($sourcePath, $destPath);
+            $this->resizeAndCopy($sourcePath, $destPath);
         }
 
         return "![$alt](/media/$filename)";
@@ -81,5 +81,75 @@ class ImageHandler
 
         $class = ' class="img-' . $size . '"';
         return '<img' . $before . 'alt="' . $cleanAlt . '"' . $class . $after . '>';
+    }
+
+    private function resizeAndCopy(string $sourcePath, string $destPath): void
+    {
+        $imageInfo = getimagesize($sourcePath);
+        if (!$imageInfo) {
+            copy($sourcePath, $destPath);
+            return;
+        }
+
+        [$width, $height, $type] = $imageInfo;
+        $maxDimension = 1080;
+
+        // Skip resize if already within limits
+        if ($width <= $maxDimension && $height <= $maxDimension) {
+            copy($sourcePath, $destPath);
+            return;
+        }
+
+        // Calculate new dimensions
+        if ($width > $height) {
+            $newWidth = $maxDimension;
+            $newHeight = intval($height * ($maxDimension / $width));
+        } else {
+            $newHeight = $maxDimension;
+            $newWidth = intval($width * ($maxDimension / $height));
+        }
+
+        // Create source image
+        $sourceImage = match($type) {
+            IMAGETYPE_JPEG => imagecreatefromjpeg($sourcePath),
+            IMAGETYPE_PNG => imagecreatefrompng($sourcePath),
+            IMAGETYPE_GIF => imagecreatefromgif($sourcePath),
+            IMAGETYPE_WEBP => imagecreatefromwebp($sourcePath),
+            default => null
+        };
+
+        if (!$sourceImage) {
+            copy($sourcePath, $destPath);
+            return;
+        }
+
+        // Create new image
+        $newImage = imagecreatetruecolor($newWidth, $newHeight);
+        
+        // Preserve transparency for PNG and GIF
+        if ($type === IMAGETYPE_PNG || $type === IMAGETYPE_GIF) {
+            imagealphablending($newImage, false);
+            imagesavealpha($newImage, true);
+            $transparent = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
+            imagefill($newImage, 0, 0, $transparent);
+        }
+
+        imagecopyresampled($newImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+
+        // Save resized image
+        $success = match($type) {
+            IMAGETYPE_JPEG => imagejpeg($newImage, $destPath, 85),
+            IMAGETYPE_PNG => imagepng($newImage, $destPath, 6),
+            IMAGETYPE_GIF => imagegif($newImage, $destPath),
+            IMAGETYPE_WEBP => imagewebp($newImage, $destPath, 85),
+            default => false
+        };
+
+        imagedestroy($sourceImage);
+        imagedestroy($newImage);
+
+        if (!$success) {
+            copy($sourcePath, $destPath);
+        }
     }
 }
